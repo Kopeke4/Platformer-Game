@@ -42,6 +42,8 @@ bool Scene::Awake()
 bool Scene::Start()
 {
 	//L06 TODO 3: Call the function to load the map. 
+	Engine::GetInstance().map->Load("Assets/maps/", "bakgorundRemaster");
+
 	Engine::GetInstance().map->Load(configParameters.child("map").attribute("path").as_string(), configParameters.child("map").attribute("name").as_string());
 
 	return true;
