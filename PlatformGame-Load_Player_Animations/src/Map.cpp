@@ -181,6 +181,25 @@ bool Map::Load(std::string path, std::string fileName)
         }
 
         // L08 TODO 3: Create colliders
+        for (const auto& mapLayer : mapData.layers)
+        {
+            if (mapLayer->properties.GetProperty("Collisions") != NULL && mapLayer->properties.GetProperty("Collisions")->value == true)
+            {
+                for (int i = 0; i < mapData.width; i++) 
+                {
+                    for (int j = 0;  j < mapData.height;  j++)
+                    {
+                        int gid = mapLayer->Get(i, j);
+                        if (gid == 343)
+                        {
+                            Vector2D mapCoord = MapToWorld(i, j);
+                            PhysBody* platform = Engine::GetInstance().physics.get()->CreateRectangle(mapCoord.getX() + mapData.tileWidth / 2, mapCoord.getY() + mapData.tileHeight / 2, mapData.tileWidth, mapData.tileHeight, STATIC);
+                            platform->ctype = ColliderType::PLATFORM;
+                        }
+                    }
+                }
+            }
+        }
         // L08 TODO 7: Assign collider type
         // Later you can create a function here to load and create the colliders from the map
         PhysBody* c1 = Engine::GetInstance().physics.get()->CreateRectangle(224 + 128, 544 + 32, 256, 64, STATIC);
