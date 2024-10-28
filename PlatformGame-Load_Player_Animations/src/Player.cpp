@@ -68,13 +68,23 @@ bool Player::Update(float dt)
 	// Move left
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 		velocity.x = -0.2 * dt;
+		isFlipeado = true;
 		currentAnimation = &run;
+		if (isFlipeado == true && flipea == SDL_FLIP_NONE)
+		{
+			flipea = SDL_FLIP_HORIZONTAL;
+		}
 	}
 
 	// Move right
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 		velocity.x = 0.2 * dt;
+		isFlipeado = false;   
 		currentAnimation = &run;
+		if (isFlipeado == false && flipea == SDL_FLIP_HORIZONTAL)
+		{
+			flipea = SDL_FLIP_NONE;
+		}
 	}
 	
 	//Jump
@@ -83,6 +93,14 @@ bool Player::Update(float dt)
 		pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
 		isJumping = true;
 		
+	}
+
+	//Jump
+	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && GodMode == true) {
+		// Apply an initial upward force
+		pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -0.1), true);
+		isJumping = true;
+
 	}
 
 	if (isJumping == true) currentAnimation = &jump;
@@ -96,6 +114,17 @@ bool Player::Update(float dt)
 		velocity.y = pbody->body->GetLinearVelocity().y;
 	}
 
+	//God Mode
+	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) {
+		GodMode = !GodMode;
+		if (GodMode) {
+			LOG("God Mode activated");
+		}
+		else {
+			LOG("God Mode deactivated");
+		}
+	}
+
 	// Apply the velocity to the player
 	pbody->body->SetLinearVelocity(velocity);
 
@@ -103,7 +132,7 @@ bool Player::Update(float dt)
 	position.setX(METERS_TO_PIXELS(pbodyPos.p.x) - texH / 2);
 	position.setY(METERS_TO_PIXELS(pbodyPos.p.y) - texH / 2);
 
-	Engine::GetInstance().render.get()->DrawTexture(texture, (int)position.getX(), (int)position.getY(), &currentAnimation->GetCurrentFrame());
+	Engine::GetInstance().render.get()->DrawTexture(texture, (int)position.getX(), (int)position.getY(), &currentAnimation->GetCurrentFrame(), flipea);
 	currentAnimation->Update();
 	return true;
 }

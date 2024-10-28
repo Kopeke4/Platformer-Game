@@ -34,6 +34,8 @@ public:
 
 private:
 	SDL_Texture* img;
+	bool verTexture = false;
+	SDL_Texture* leControle;
 
 	//L03: TODO 3b: Declare a Player attribute
 	Player* player;
