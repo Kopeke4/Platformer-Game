@@ -1,5 +1,6 @@
 # Platformer-Game
 Relaxing pixel art platformer where you explore charming worlds at your own pace. Enjoy the scenery!
+Release URL: https://github.com/Kopeke4/Platformer-Game/releases/tag/Asignment
 
 # CONTROLS
 AD _ Move Characte
