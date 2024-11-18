@@ -7,6 +7,7 @@
 #include "Scene.h"
 #include "Log.h"
 #include "Physics.h"
+#include "EntityManager.h"
 
 Player::Player() : Entity(EntityType::PLAYER)
 {
@@ -181,4 +182,17 @@ void Player::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
 	default:
 		break;
 	}
+}
+
+void Player::SetPosition(Vector2D pos) {
+	pos.setX(pos.getX() + texW / 2);
+	pos.setY(pos.getY() + texH / 2);
+	b2Vec2 bodyPos = b2Vec2(PIXEL_TO_METERS(pos.getX()), PIXEL_TO_METERS(pos.getY()));
+	pbody->body->SetTransform(bodyPos, 0);
+}
+
+Vector2D Player::GetPosition() {
+	b2Vec2 bodyPos = pbody->body->GetTransform().p;
+	Vector2D pos = Vector2D(METERS_TO_PIXELS(bodyPos.x), METERS_TO_PIXELS(bodyPos.y));
+	return pos;
 }

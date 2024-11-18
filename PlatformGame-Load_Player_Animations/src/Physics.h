@@ -2,6 +2,7 @@
 #include "Module.h"
 #include "Entity.h"
 #include "box2d/box2d.h"
+#include <list>
 
 #define GRAVITY_X 0.0f
 #define GRAVITY_Y -10.0f
@@ -26,6 +27,8 @@ enum class ColliderType {
 	PLAYER, 
 	ITEM,
 	PLATFORM, 
+	PINCHO,
+	ENEMY,
 	UNKNOWN
 	// ..
 };

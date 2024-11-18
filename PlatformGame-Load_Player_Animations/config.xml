@@ -21,6 +21,7 @@
   <scene>
     <map path="Assets/Maps/" name="Map.tmx"/>
     <entities>
+		
       <player x="100" y="0" w="32" h ="32" texture="Assets/Sprites/Player/Character.png">
         <animations>
           <idle loop="true" speed ="0.1">
@@ -47,6 +48,21 @@
 			</fall>
         </animations>
       </player>
+		
+		<enemies>
+			<enemy name="badguy" x="0" y="0" w="32" h="32" texture="Assets/Sprites/Mushroom/MushroomIdle.png" gravity="true">
+				<animations>
+					<idle loop="true" speed ="0.1">
+						<frame x="0" y="0" w="32" h="32"/>
+						<frame x="32" y="0" w="32" h="32"/>
+						<frame x="64" y="0" w="32" h="32"/>
+						<frame x="96" y="0" w="32" h="32"/>
+						<frame x="128" y="0" w="32" h="32"/>
+						<frame x="160" y="0" w="32" h="32"/>
+					</idle>
+				</animations>
+			</enemy>
+		</enemies>		
     </entities>
   </scene>
 	

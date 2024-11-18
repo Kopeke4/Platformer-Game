@@ -181,23 +181,35 @@ bool Map::Load(std::string path, std::string fileName)
         }
 
         // L08 TODO 3: Create colliders
-        for (const auto& mapLayer : mapData.layers)
-        {
-            if (mapLayer->properties.GetProperty("Collisions") != NULL && mapLayer->properties.GetProperty("Collisions")->value == true)
-            {
-                for (int i = 0; i < mapData.width; i++) 
-                {
-                    for (int j = 0;  j < mapData.height;  j++)
-                    {
-                        int gid = mapLayer->Get(i, j);
-                        if (gid == 343)
-                        {
-                            Vector2D mapCoord = MapToWorld(i, j);
-                            PhysBody* platform = Engine::GetInstance().physics.get()->CreateRectangle(mapCoord.getX() + mapData.tileWidth / 2, mapCoord.getY() + mapData.tileHeight / 2, mapData.tileWidth, mapData.tileHeight, STATIC);
-                            platform->ctype = ColliderType::PLATFORM;
-                        }
-                    }
+        float x = 0.0f;
+        float y = 0.0f;
+        float width = 0.0f;
+        float height = 0.0f;
+
+        for (pugi::xml_node layerNode = mapFileXML.child("map").child("objectgroup"); layerNode != NULL; layerNode = layerNode.next_sibling("objectgroup")) {
+
+            //Get objet group name(PLATFORM OR SPIKE)
+            std::string layerName = layerNode.attribute("name").as_string();
+
+            for (pugi::xml_node tileNode = layerNode.child("object"); tileNode != NULL; tileNode = tileNode.next_sibling("object")) {
+
+                // Asigna los valores correctos desde el XML
+                x = tileNode.attribute("x").as_float();
+                y = tileNode.attribute("y").as_float();
+                width = tileNode.attribute("width").as_float();
+                height = tileNode.attribute("height").as_float();
+
+                ColliderType colliderType = ColliderType::PLATFORM; // Valor por defecto
+
+                // If layer name is "spike" then asign type spike AQUI ES LO DE LAS CAPAS
+                if (layerName == "Pincho") {
+                    colliderType = ColliderType::PINCHO;
                 }
+ 
+
+                // Crear el objeto de colisión con el tipo determinado
+                PhysBody* rect = Engine::GetInstance().physics.get()->CreateRectangle(x + width / 2, y + height / 2, width, height, STATIC);
+                rect->ctype = colliderType;
             }
         }
         // L08 TODO 7: Assign collider type
@@ -259,6 +271,25 @@ Vector2D Map::MapToWorld(int x, int y) const
     return ret;
 }
 
+Vector2D Map::WorldToMap(int x, int y) {
+
+    Vector2D ret(0, 0);
+
+    if (mapData.orientation == MapOrientation::ORTOGRAPHIC) {
+        ret.setX(x / mapData.tileWidth);
+        ret.setY(y / mapData.tileHeight);
+    }
+
+    if (mapData.orientation == MapOrientation::ISOMETRIC) {
+        float half_width = mapData.tileWidth / 2;
+        float half_height = mapData.tileHeight / 2;
+        ret.setX(int((x / half_width + y / half_height) / 2));
+        ret.setY(int((y / half_height - (x / half_width)) / 2));
+    }
+
+    return ret;
+}
+
 // L09: TODO 6: Load a group of properties from a node and fill a list with it
 bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 {
@@ -274,6 +305,17 @@ bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
     }
 
     return ret;
+}
+
+MapLayer* Map::GetNavigationLayer() {
+    for (const auto& layer : mapData.layers) {
+        if (layer->properties.GetProperty("Navigation") != NULL &&
+            layer->properties.GetProperty("Navigation")->value) {
+            return layer;
+        }
+    }
+
+    return nullptr;
 }
 
 // L09: TODO 7: Implement a method to get the value of a custom property
