@@ -1,69 +1,62 @@
-<!-- Config file for the engine -->
-
+<?xml version="1.0"?>
 <config>
-  <engine>
-    <title>My platformer game</title>
-    <maxFrameDuration value="16"/>
-  </engine>
-
-  <render>
-    <vsync value="false"/>
-  </render>
-
-  <window>
-    <resolution width="1280" height="720" scale="2"/>
-    <fullscreen value="false"/>
-    <borderless value="false"/>
-    <resizable value="false"/>
-    <fullscreen_window value="false"/>
-  </window>
-
-  <scene>
-    <map path="Assets/Maps/" name="Map.tmx"/>
-    <entities>
-		
-      <player x="100" y="0" w="32" h ="32" texture="Assets/Sprites/Player/Character.png">
-        <animations>
-          <idle loop="true" speed ="0.1">
-            <frame x="0" y="32" w="32" h="32"/>
-            <frame x="32" y="32" w="32" h="32"/>
-            <frame x="64" y="32" w="32" h="32"/>
-            <frame x="96" y="32" w="32" h="32"/>
-          </idle>
-          <run loop="true" speed ="0.3">
-			  <frame x="0" y="64" w="32" h="32"/>
-			  <frame x="32" y="64" w="32" h="32"/>
-			  <frame x="64" y="64" w="32" h="32"/>
-			  <frame x="96" y="64" w="32" h="32"/>
-			  <frame x="128" y="64" w="32" h="32"/>
-			  <frame x="160" y="64" w="32" h="32"/>
-			  <frame x="192" y="64" w="32" h="32"/>
-			  <frame x="224" y="64" w="32" h="32"/>
-		  </run>
-			<jump loop="false" speed ="0.3">
-				<frame x="0" y="0" w="32" h="32"/>
-			</jump>
-			<fall loop="false" speed ="0.3">
-				<frame x="64" y="0" w="32" h="32"/>
-			</fall>
-        </animations>
-      </player>
-		
-		<enemies>
-			<enemy name="badguy" x="0" y="0" w="32" h="32" texture="Assets/Sprites/Mushroom/MushroomIdle.png" gravity="true">
+	<engine>
+		<title>My platformer game</title>
+		<maxFrameDuration value="16" />
+	</engine>
+	<render>
+		<vsync value="false" />
+	</render>
+	<window>
+		<resolution width="1280" height="720" scale="2" />
+		<fullscreen value="false" />
+		<borderless value="false" />
+		<resizable value="false" />
+		<fullscreen_window value="false" />
+	</window>
+	<scene>
+		<map path="Assets/Maps/" name="Map.tmx" />
+		<entities>
+			<player x="565" y="192" w="32" h="32" texture="Assets/Sprites/Player/Character.png">
 				<animations>
-					<idle loop="true" speed ="0.1">
-						<frame x="0" y="0" w="32" h="32"/>
-						<frame x="32" y="0" w="32" h="32"/>
-						<frame x="64" y="0" w="32" h="32"/>
-						<frame x="96" y="0" w="32" h="32"/>
-						<frame x="128" y="0" w="32" h="32"/>
-						<frame x="160" y="0" w="32" h="32"/>
+					<idle loop="true" speed="0.1">
+						<frame x="0" y="32" w="32" h="32" />
+						<frame x="32" y="32" w="32" h="32" />
+						<frame x="64" y="32" w="32" h="32" />
+						<frame x="96" y="32" w="32" h="32" />
 					</idle>
+					<run loop="true" speed="0.3">
+						<frame x="0" y="64" w="32" h="32" />
+						<frame x="32" y="64" w="32" h="32" />
+						<frame x="64" y="64" w="32" h="32" />
+						<frame x="96" y="64" w="32" h="32" />
+						<frame x="128" y="64" w="32" h="32" />
+						<frame x="160" y="64" w="32" h="32" />
+						<frame x="192" y="64" w="32" h="32" />
+						<frame x="224" y="64" w="32" h="32" />
+					</run>
+					<jump loop="false" speed="0.3">
+						<frame x="0" y="0" w="32" h="32" />
+					</jump>
+					<fall loop="false" speed="0.3">
+						<frame x="64" y="0" w="32" h="32" />
+					</fall>
 				</animations>
-			</enemy>
-		</enemies>		
-    </entities>
-  </scene>
-	
+			</player>
+			<enemies>
+				<enemy name="badguy" x="0" y="0" w="32" h="32" texture="Assets/Sprites/Mushroom/MushroomIdle.png" gravity="true">
+					<animations>
+						<idle loop="true" speed="0.1">
+							<frame x="0" y="0" w="32" h="32" />
+							<frame x="32" y="0" w="32" h="32" />
+							<frame x="64" y="0" w="32" h="32" />
+							<frame x="96" y="0" w="32" h="32" />
+							<frame x="128" y="0" w="32" h="32" />
+							<frame x="160" y="0" w="32" h="32" />
+						</idle>
+					</animations>
+				</enemy>
+			</enemies>
+		</entities>
+	</scene>
 </config>

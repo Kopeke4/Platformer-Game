@@ -36,6 +36,8 @@ public:
 
 	Vector2D GetPlayerPosition();
 
+	void LoadState();
+	void SaveState();
 public:
 	// Get tilePosDebug value
 	std::string GetTilePosDebug() {
