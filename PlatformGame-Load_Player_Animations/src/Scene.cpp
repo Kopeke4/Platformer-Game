@@ -155,23 +155,23 @@ void Scene::LoadState() {
 			enemyNode.attribute("y").as_int()
 		);
 
-		// If the EnemyList has enough enemies to update
-		if (enemyIndex < enemyList.size()) {
-			// Update the position of the existing enemy in the list
-			enemyList[enemyIndex].SetPosition(enemyPos);
+		//// If the EnemyList has enough enemies to update
+		//if (enemyIndex < enemyList.size()) {
+		//	// Update the position of the existing enemy in the list
+		//	enemyList[enemyIndex].SetPosition(enemyPos);
 
-			// Optionally, load other attributes like texture, gravity, etc.
-			std::string texturePath = enemyNode.attribute("texture").as_string();
-			bool gravity = enemyNode.attribute("gravity").as_bool();
+		//	// Optionally, load other attributes like texture, gravity, etc.
+		//	std::string texturePath = enemyNode.attribute("texture").as_string();
+		//	bool gravity = enemyNode.attribute("gravity").as_bool();
 
-			// Assuming Enemy class has methods to set texture and gravity
-			enemyList[enemyIndex].SetTexture(texturePath);
-			enemyList[enemyIndex].SetGravity(gravity);
-		}
-		else {
-			LOG("Warning: More enemies in XML than in EnemyList.");
-			break;
-		}
+		//	// Assuming Enemy class has methods to set texture and gravity
+		//	enemyList[enemyIndex].SetTexture(texturePath);
+		//	enemyList[enemyIndex].SetGravity(gravity);
+		//}
+		//else {
+		//	LOG("Warning: More enemies in XML than in EnemyList.");
+		//	break;
+		//}
 
 		// Increment the index to update the next enemy in the list
 		++enemyIndex;
