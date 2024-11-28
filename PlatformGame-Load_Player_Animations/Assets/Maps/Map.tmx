@@ -78,12 +78,12 @@
  <tileset firstgid="343" name="Colision" tilewidth="16" tileheight="16" tilecount="8" columns="4">
   <image source="MapMetadata.png" width="67" height="34"/>
  </tileset>
- <tileset firstgid="351" name="bg1" tilewidth="16" tileheight="16" tilecount="10400" columns="260">
+ <tileset firstgid="351" name="bg1" tilewidth="16" tileheight="16" tilecount="0" columns="260">
   <image source="../../../../../../Downloads/BG1.png" width="4160" height="640"/>
  </tileset>
  <layer id="11" name="bg1" width="130" height="24">
   <properties>
-   <property name="Draw" type="bool" value="true"/>
+   <property name="Draw" type="bool" value="false"/>
   </properties>
   <data>
    <tile gid="2719"/>
@@ -9524,7 +9524,7 @@
   <object id="61" x="704" y="192" width="64" height="16"/>
  </objectgroup>
  <imagelayer id="9" name="Capa de Imagen 1" visible="0">
-  <image source="../../../../../../Downloads/BG.png" width="1040" height="160"/>
+  <image source="../../../../../../Downloads/BG.png" width="2614" height="3709"/>
   <properties>
    <property name="Draw" type="bool" value="true"/>
   </properties>
