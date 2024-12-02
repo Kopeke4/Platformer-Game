@@ -274,20 +274,11 @@ Vector2D Map::MapToWorld(int x, int y) const
 Vector2D Map::WorldToMap(int x, int y) {
 
     Vector2D ret(0, 0);
+       ret.setX(x / mapData.tileWidth);
+       ret.setY(y / mapData.tileHeight);
+    
 
-    if (mapData.orientation == MapOrientation::ORTOGRAPHIC) {
-        ret.setX(x / mapData.tileWidth);
-        ret.setY(y / mapData.tileHeight);
-    }
-
-    if (mapData.orientation == MapOrientation::ISOMETRIC) {
-        float half_width = mapData.tileWidth / 2;
-        float half_height = mapData.tileHeight / 2;
-        ret.setX(int((x / half_width + y / half_height) / 2));
-        ret.setY(int((y / half_height - (x / half_width)) / 2));
-    }
-
-    return ret;
+      return ret;
 }
 
 // L09: TODO 6: Load a group of properties from a node and fill a list with it
