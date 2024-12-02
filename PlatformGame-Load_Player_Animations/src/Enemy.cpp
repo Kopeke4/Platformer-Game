@@ -68,7 +68,7 @@ bool Enemy::Update(float dt)
 		Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) {
 		pathfinding->PropagateBFS();
 	}
-
+	
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_K) == KEY_DOWN) {
 		pathfinding->PropagateDijkstra();
 	}
@@ -77,7 +77,7 @@ bool Enemy::Update(float dt)
 		Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) {
 		pathfinding->PropagateDijkstra();
 	}
-
+	/*pathfinding->PropagateAStar(MANHATTAN);*/
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_B) == KEY_DOWN) {
 		pathfinding->PropagateAStar(MANHATTAN);
 	}
