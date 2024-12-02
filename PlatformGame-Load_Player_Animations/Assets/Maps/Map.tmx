@@ -82,7 +82,7 @@
   <image source="MapMetadata.png" width="67" height="34"/>
  </tileset>
  <tileset firstgid="351" name="BG2" tilewidth="16" tileheight="16" spacing="1" margin="1" tilecount="10980" columns="244">
-  <image source="../../../../../../Downloads/BG2.png" width="4160" height="768"/>
+  <image source="BG2.png" width="4160" height="768"/>
  </tileset>
  <layer id="13" name="map" width="130" height="24">
   <properties>
