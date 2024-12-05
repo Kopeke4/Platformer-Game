@@ -202,7 +202,7 @@ bool Map::Load(std::string path, std::string fileName)
                 ColliderType colliderType = ColliderType::PLATFORM; // Valor por defecto
 
                 // If layer name is "spike" then asign type spike AQUI ES LO DE LAS CAPAS
-                if (layerName == "Pincho") {
+                if (layerName == "PINCHO") {
                     colliderType = ColliderType::PINCHO;
                 }
  

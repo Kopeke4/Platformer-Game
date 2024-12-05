@@ -34,6 +34,8 @@ public:
 
 	void SetPosition(Vector2D pos);
 
+	void Respawn();
+
 	Vector2D GetPosition();
 
 public:

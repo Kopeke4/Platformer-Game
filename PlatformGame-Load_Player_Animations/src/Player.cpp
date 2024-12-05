@@ -176,6 +176,10 @@ void Player::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
 		LOG("End Collision ITEM");
 		Engine::GetInstance().audio.get()->PlayFx(pickCoinFxId);
 		break;
+	case ColliderType::PINCHO:
+		LOG("Collision PINCHO");
+		Respawn(); // Llama a una función para reaparecer.
+		break;
 	case ColliderType::UNKNOWN:
 		LOG("End Collision UNKNOWN");
 		break;
@@ -183,6 +187,14 @@ void Player::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
 		break;
 	}
 }
+
+void Player::Respawn() {
+	// Define un punto de reaparición. Puedes personalizarlo más adelante.
+	Vector2D respawnPosition(0, 0); // Coordenadas X e Y del punto de reaparición.
+	SetPosition(respawnPosition);
+	LOG("Player respawned at initial position.");
+}
+
 
 void Player::SetPosition(Vector2D pos) {
 	pos.setX(pos.getX() + texW / 2);
