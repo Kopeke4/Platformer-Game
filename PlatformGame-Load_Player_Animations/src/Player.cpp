@@ -178,7 +178,7 @@ void Player::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
 		break;
 	case ColliderType::PINCHO:
 		LOG("Collision PINCHO");
-		Respawn(); // Llama a una función para reaparecer.
+		Respawn(); 
 		break;
 	case ColliderType::UNKNOWN:
 		LOG("End Collision UNKNOWN");
@@ -189,10 +189,8 @@ void Player::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
 }
 
 void Player::Respawn() {
-	// Define un punto de reaparición. Puedes personalizarlo más adelante.
-	Vector2D respawnPosition(0, 0); // Coordenadas X e Y del punto de reaparición.
-	SetPosition(respawnPosition);
-	LOG("Player respawned at initial position.");
+	position.setX(parameters.attribute("x").as_int());
+	position.setY(parameters.attribute("y").as_int());
 }
 
 
