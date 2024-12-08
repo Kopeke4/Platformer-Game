@@ -43,6 +43,8 @@ void Pathfinding::ResetPath(Vector2D pos) {
     visited.clear(); //Clear the visited list
     breadcrumbs.clear(); //Clear the breadcrumbs list
     pathTiles.clear(); //Clear the pathTiles list
+    path.clear();
+
 
     // Inserts the first position in the queue and visited list
     frontier.push(pos); //BFS

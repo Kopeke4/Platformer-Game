@@ -34,7 +34,8 @@ public:
 
     // L13: A* Pathfinding methods
     void PropagateAStar(ASTAR_HEURISTICS heuristic);
-
+    std::vector<Vector2D> path;
+    std::vector<Vector2D> GetPath() const;
 private:
     int Find(std::vector<Vector2D> vector, Vector2D elem);
 
