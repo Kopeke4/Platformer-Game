@@ -53,14 +53,15 @@ bool Enemy::Start() {
 
 bool Enemy::Update(float dt)
 {
+	
+	ResetPath();
 
-	// Pathfinding testing inputs
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_R) == KEY_DOWN) {
-		ResetPath();
-		while (pathfinding->pathTiles.empty()) {
-			pathfinding->PropagateAStar(SQUARED);
-		}
+	while (pathfinding->pathTiles.empty()) 
+	{
+		pathfinding->PropagateAStar(SQUARED);
 	}
+
+	Move(dt);
 
 	// L08 TODO 4: Add a physics to an item - update the position of the object from the physics.  
 	b2Transform pbodyPos = pbody->body->GetTransform();
@@ -74,6 +75,29 @@ bool Enemy::Update(float dt)
 	pathfinding->DrawPath();
 
 	return true;
+}
+
+void Enemy::Move(float dt)
+{
+	/*if (pathfinding->pathTiles.size() > 32) 
+	{
+		pbody->body->SetLinearVelocity(b2Vec2(0, 0));
+		return;
+	}
+
+	auto it = pathfinding->pathTiles.rbegin();
+	++it;
+	Vector2D destination = *it;
+
+	Vector2D direction = Engine::GetInstance().map.get()->MapToWorld(destination.getX(), destination.getY()) + Vector2D(32, 32) - GetPosition();
+
+	direction.normalized();
+	Vector2D velocity(0, 0);
+	velocity = direction * 70.0f;
+
+
+	b2Vec2 velocityb2Vec = b2Vec2(PIXEL_TO_METERS(velocity.getX()), PIXEL_TO_METERS(velocity.getY()));
+	pbody->body->SetLinearVelocity(velocityb2Vec);*/
 }
 
 bool Enemy::CleanUp()

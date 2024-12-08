@@ -17,6 +17,8 @@ public:
 	bool Awake();
 
 	bool Start();
+	
+	void Move(float dt);
 
 	bool Update(float dt);
 
