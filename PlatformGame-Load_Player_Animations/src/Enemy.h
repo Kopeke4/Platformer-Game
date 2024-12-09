@@ -34,12 +34,14 @@ public:
 
 	void ResetPath();
 
+	std::string GetName();
 public:
 
 private:
 
 	SDL_Texture* texture;
 	const char* texturePath;
+	std::string name;
 	int texW, texH;
 	bool gravity;
 	float speed;
@@ -49,6 +51,6 @@ private:
 	PhysBody* pbody;
 	Pathfinding* pathfinding;
 	bool debug = false;
-	bool flip = true;
+	bool flip = false;
 	SDL_RendererFlip hflip = SDL_FLIP_NONE;
 };

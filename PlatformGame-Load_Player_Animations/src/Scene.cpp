@@ -160,26 +160,7 @@ void Scene::LoadState() {
 			enemyNode.attribute("y").as_int()
 		);
 
-		//// If the EnemyList has enough enemies to update
-		//if (enemyIndex < enemyList.size()) {
-		//	// Update the position of the existing enemy in the list
-		//	enemyList[enemyIndex].SetPosition(enemyPos);
-
-		//	// Optionally, load other attributes like texture, gravity, etc.
-		//	std::string texturePath = enemyNode.attribute("texture").as_string();
-		//	bool gravity = enemyNode.attribute("gravity").as_bool();
-
-		//	// Assuming Enemy class has methods to set texture and gravity
-		//	enemyList[enemyIndex].SetTexture(texturePath);
-		//	enemyList[enemyIndex].SetGravity(gravity);
-		//}
-		//else {
-		//	LOG("Warning: More enemies in XML than in EnemyList.");
-		//	break;
-		//}
-
-		// Increment the index to update the next enemy in the list
-		++enemyIndex;
+		
 	}
 
 }
@@ -204,7 +185,23 @@ void Scene::SaveState() {
 	sceneNode.child("entities").child("player").attribute("y").set_value(player->GetPosition().getY());
 
 	//enemies
-	
+	pugi::xml_node enemiesNode = sceneNode.child("enemies");
+
+	for (pugi::xml_node enemyNode = enemiesNode.child("enemy"); enemyNode; enemyNode = enemyNode.next_sibling("enemy")) {
+		std::string enemyName = enemyNode.attribute("name").as_string();
+
+		// Find the corresponding enemy in the enemyList
+		for (const auto& enemy : enemyList) {
+			if (enemy->GetName() == enemyName) { // Assume GetName() returns the enemy's name
+				Vector2D position = enemy->GetPosition();
+
+				// Update XML attributes
+				enemyNode.attribute("x").set_value(position.getX());
+				enemyNode.attribute("y").set_value(position.getY());
+				break;
+			}
+		}
+	}
 
 	//Saves the modifications to the XML 
 	loadFile.save_file("config.xml");

@@ -33,6 +33,7 @@ bool Enemy::Start() {
 	texH = parameters.attribute("h").as_int();
 	gravity = parameters.attribute("gravity").as_bool();
 	speed = parameters.attribute("speed").as_float();
+	name = parameters.attribute("name").as_string();
 	//Load animations
 	idle.LoadAnimations(parameters.child("animations").child("idle"));
 	currentAnimation = &idle;
@@ -82,6 +83,26 @@ bool Enemy::Update(float dt)
 	}
 
 	return true;
+
+	b2Vec2 velocity = b2Vec2(0, pbody->body->GetLinearVelocity().y);
+
+	// Move left
+	if (velocity.x > 0) {
+		flip = true;
+		if (flip == true && hflip == SDL_FLIP_NONE)
+		{
+			hflip = SDL_FLIP_HORIZONTAL;
+		}
+	}
+
+	// Move right
+	if ( 0 > velocity.x) {
+		flip = false;
+		if (flip == false && hflip == SDL_FLIP_HORIZONTAL)
+		{
+			hflip = SDL_FLIP_NONE;
+		}
+	}
 }
 
 void Enemy::Move(float dt)
@@ -99,23 +120,6 @@ void Enemy::Move(float dt)
 
 		movement.normalized();
 		b2Vec2 velocity(movement.getX() * speed, movement.getY() * speed);
-
-
-		if (velocity.x < 0)
-		{
-			flip = true;
-			if (flip == true && hflip == SDL_FLIP_NONE) {
-				hflip = SDL_FLIP_HORIZONTAL;
-			}
-		}
-		else
-		{
-			flip = false;
-			if (flip == false && hflip == SDL_FLIP_HORIZONTAL) {
-				hflip = SDL_FLIP_NONE;
-			}
-		}
-
 
 		if (distance > 1.0f) {
 			if (!gravity) { //If distance is bigger than
@@ -152,4 +156,8 @@ void Enemy::ResetPath() {
 	Vector2D pos = GetPosition();
 	Vector2D tilePos = Engine::GetInstance().map.get()->WorldToMap(pos.getX(), pos.getY());
 	pathfinding->ResetPath(tilePos);
+}
+
+std::string Enemy::GetName() {
+	return name;
 }
