@@ -86,7 +86,7 @@ bool Enemy::Update(float dt)
 
 void Enemy::Move(float dt)
 {
-	if(pathfinding->pathTiles.size() > 3&& !(pathfinding->pathTiles.size() > 27)) {
+	if(pathfinding->pathTiles.size() > 3&& !(pathfinding->pathTiles.size() > 18)) {
 
 		auto it = pathfinding->pathTiles.end();  // Start at the end of the path
 		std::advance(it, -4);
