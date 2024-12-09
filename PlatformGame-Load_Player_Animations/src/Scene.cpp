@@ -133,7 +133,7 @@ Vector2D Scene::GetPlayerPosition()
 void Scene::LoadState() {
 
 	pugi::xml_document loadFile;
-	pugi::xml_parse_result result = loadFile.load_file("config.xml");
+	pugi::xml_parse_result result = loadFile.load_file("save.xml");
 
 	if (result == NULL)
 	{
@@ -152,16 +152,23 @@ void Scene::LoadState() {
 	pugi::xml_node enemiesNode = sceneNode.child("entities").child("enemies");
 
 	//enemies
-	size_t enemyIndex = 0;
 	for (pugi::xml_node enemyNode = enemiesNode.child("enemy"); enemyNode; enemyNode = enemyNode.next_sibling("enemy")) {
-		// Read the enemy's position and attributes
+		std::string enemyName = enemyNode.attribute("name").as_string();
 		Vector2D enemyPos(
 			enemyNode.attribute("x").as_int(),
 			enemyNode.attribute("y").as_int()
 		);
 
-		
+		// Find the corresponding enemy in the enemyList
+		for (const auto& enemy : enemyList) {
+			if (enemy->GetName() == enemyName) { 
+				enemy->SetPosition(enemyPos);
+				LOG("Updated position of enemy '%s' to (%d, %d)", enemyName.c_str(), enemyPos.getX(), enemyPos.getY());
+				break;
+			}
+		}
 	}
+
 
 }
 
@@ -185,17 +192,18 @@ void Scene::SaveState() {
 	sceneNode.child("entities").child("player").attribute("y").set_value(player->GetPosition().getY());
 
 	//enemies
-	pugi::xml_node enemiesNode = sceneNode.child("enemies");
+	pugi::xml_node enemiesNode = sceneNode.child("entities").child("enemies");
+	LOG("enemyList size: %d", enemyList.size());
+
+	sceneNode.print(std::cout);
 
 	for (pugi::xml_node enemyNode = enemiesNode.child("enemy"); enemyNode; enemyNode = enemyNode.next_sibling("enemy")) {
 		std::string enemyName = enemyNode.attribute("name").as_string();
 
-		// Find the corresponding enemy in the enemyList
 		for (const auto& enemy : enemyList) {
-			if (enemy->GetName() == enemyName) { // Assume GetName() returns the enemy's name
+			if (enemy->GetName() == enemyName) {
 				Vector2D position = enemy->GetPosition();
 
-				// Update XML attributes
 				enemyNode.attribute("x").set_value(position.getX());
 				enemyNode.attribute("y").set_value(position.getY());
 				break;
@@ -204,5 +212,5 @@ void Scene::SaveState() {
 	}
 
 	//Saves the modifications to the XML 
-	loadFile.save_file("config.xml");
+	loadFile.save_file("save.xml");
 }
