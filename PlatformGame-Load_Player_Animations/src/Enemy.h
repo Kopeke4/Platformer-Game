@@ -41,9 +41,14 @@ private:
 	SDL_Texture* texture;
 	const char* texturePath;
 	int texW, texH;
+	bool gravity;
+	float speed;
 	pugi::xml_node parameters;
 	Animation* currentAnimation = nullptr;
 	Animation idle;
 	PhysBody* pbody;
 	Pathfinding* pathfinding;
+	bool debug = false;
+	bool flip = true;
+	SDL_RendererFlip hflip = SDL_FLIP_NONE;
 };

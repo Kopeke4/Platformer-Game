@@ -12,7 +12,7 @@
 
 Enemy::Enemy() : Entity(EntityType::ENEMY)
 {
-
+	
 }
 
 Enemy::~Enemy() {
@@ -31,7 +31,8 @@ bool Enemy::Start() {
 	position.setY(parameters.attribute("y").as_int());
 	texW = parameters.attribute("w").as_int();
 	texH = parameters.attribute("h").as_int();
-
+	gravity = parameters.attribute("gravity").as_bool();
+	speed = parameters.attribute("speed").as_float();
 	//Load animations
 	idle.LoadAnimations(parameters.child("animations").child("idle"));
 	currentAnimation = &idle;
@@ -54,7 +55,9 @@ bool Enemy::Start() {
 
 bool Enemy::Update(float dt)
 {
-	
+	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
+		debug = !debug;
+	}
 	ResetPath();
 
 	while (pathfinding->pathTiles.empty()) 
@@ -73,32 +76,58 @@ bool Enemy::Update(float dt)
 	currentAnimation->Update();
 
 	// Draw pathfinding 
-	//pathfinding->DrawPath();
+	if (debug) {
+
+	pathfinding->DrawPath();
+	}
 
 	return true;
 }
 
 void Enemy::Move(float dt)
 {
-	/*if (pathfinding->pathTiles.size() > 32) 
-	{
-		pbody->body->SetLinearVelocity(b2Vec2(0, 0));
-		return;
+	if(pathfinding->pathTiles.size() > 3&& !(pathfinding->pathTiles.size() > 27)) {
+
+		auto it = pathfinding->pathTiles.end();  // Start at the end of the path
+		std::advance(it, -4);
+		Vector2D targetTile = *it;
+		Vector2D targetWorldPos = Engine::GetInstance().map.get()->MapToWorld(targetTile.getX(), targetTile.getY());
+
+		//Calculate vector movement
+		Vector2D movement = targetWorldPos + Vector2D(16, 16) - GetPosition();
+		float distance = movement.magnitude();
+
+		movement.normalized();
+		b2Vec2 velocity(movement.getX() * speed, movement.getY() * speed);
+
+
+		if (velocity.x < 0)
+		{
+			flip = true;
+			if (flip == true && hflip == SDL_FLIP_NONE) {
+				hflip = SDL_FLIP_HORIZONTAL;
+			}
+		}
+		else
+		{
+			flip = false;
+			if (flip == false && hflip == SDL_FLIP_HORIZONTAL) {
+				hflip = SDL_FLIP_NONE;
+			}
+		}
+
+
+		if (distance > 1.0f) {
+			if (!gravity) { //If distance is bigger than
+				pbody->body->SetLinearVelocity(velocity);
+			}
+			else {
+				velocity.y = pbody->body->GetLinearVelocity().y;
+				pbody->body->SetLinearVelocity(velocity);
+
+			}
+		}
 	}
-
-	auto it = pathfinding->pathTiles.end();
-	--it;
-	Vector2D destination = *it;
-
-	
-
-	direction.normalized();
-	Vector2D velocity(0, 0);
-	velocity = direction * 30.0f;
-
-
-	b2Vec2 velocityb2Vec = b2Vec2(PIXEL_TO_METERS(velocity.getX()), PIXEL_TO_METERS(velocity.getY()));
-	pbody->body->SetLinearVelocity(velocityb2Vec);*/
 }
 
 bool Enemy::CleanUp()
