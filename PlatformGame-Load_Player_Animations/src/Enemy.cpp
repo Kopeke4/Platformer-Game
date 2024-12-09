@@ -72,7 +72,7 @@ bool Enemy::Update(float dt)
 	currentAnimation->Update();
 
 	// Draw pathfinding 
-	pathfinding->DrawPath();
+	//pathfinding->DrawPath();
 
 	return true;
 }
@@ -85,15 +85,15 @@ void Enemy::Move(float dt)
 		return;
 	}
 
-	auto it = pathfinding->pathTiles.rbegin();
-	++it;
+	auto it = pathfinding->pathTiles.end();
+	--it;
 	Vector2D destination = *it;
 
-	Vector2D direction = Engine::GetInstance().map.get()->MapToWorld(destination.getX(), destination.getY()) + Vector2D(32, 32) - GetPosition();
+	
 
 	direction.normalized();
 	Vector2D velocity(0, 0);
-	velocity = direction * 70.0f;
+	velocity = direction * 30.0f;
 
 
 	b2Vec2 velocityb2Vec = b2Vec2(PIXEL_TO_METERS(velocity.getX()), PIXEL_TO_METERS(velocity.getY()));
