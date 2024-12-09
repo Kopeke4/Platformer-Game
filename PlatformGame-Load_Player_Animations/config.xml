@@ -66,6 +66,28 @@
 						</run>
 					</animations>
 				</enemy>
+				<enemy name="badguyFAST" x="124" y="112" w="32" h="32" texture="Assets/Sprites/Mushroom/MushroomFAST1.png" gravity="true">
+					<animations>
+						<idle loop="true" speed="0.1">
+							<frame x="0" y="0" w="32" h="32" />
+							<frame x="32" y="0" w="32" h="32" />
+							<frame x="64" y="0" w="32" h="32" />
+							<frame x="96" y="0" w="32" h="32" />
+							<frame x="128" y="0" w="32" h="32" />
+							<frame x="160" y="0" w="32" h="32" />
+						</idle>
+						<run loop="true" speed="0.3">
+							<frame x="0" y="32" w="32" h="32" />
+							<frame x="32" y="32" w="32" h="32" />
+							<frame x="64" y="32" w="32" h="32" />
+							<frame x="96" y="32" w="32" h="32" />
+							<frame x="128" y="32" w="32" h="32" />
+							<frame x="160" y="32" w="32" h="32" />
+							<frame x="192" y="32" w="32" h="32" />
+							<frame x="224" y="32" w="32" h="32" />
+						</run>
+					</animations>
+				</enemy>
 				<enemy name="fly" x="256" y="112" w="32" h="32" texture="Assets/Sprites/Fly/Fly.png" gravity="false">
 					<animations>
 						<idle loop="true" speed="0.15">
