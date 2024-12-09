@@ -119,6 +119,7 @@ private:
 	int secondsSinceStartup = 0;
 
 	//Maximun frame duration in miliseconds.
+	bool debug = false;
 	int maxFrameDuration = 16;
 
 	std::string gameTitle = "Platformer Game";

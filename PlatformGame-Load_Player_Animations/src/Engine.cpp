@@ -128,6 +128,17 @@ bool Engine::Update() {
     bool ret = true;
     PrepareUpdate();
 
+        if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F11) == KEY_DOWN) {
+            debug = !debug;
+        }
+
+        if (debug) {
+            maxFrameDuration = 32;
+        }
+        else {
+            maxFrameDuration = 16;
+        }
+
     if (input->GetWindowEvent(WE_QUIT) == true)
         ret = false;
 

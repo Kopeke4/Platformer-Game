@@ -51,6 +51,7 @@ private:
 	PhysBody* pbody;
 	Pathfinding* pathfinding;
 	bool debug = false;
+	int maxFrameDuration = 16;
 	bool flip = false;
 	SDL_RendererFlip hflip = SDL_FLIP_NONE;
 };
