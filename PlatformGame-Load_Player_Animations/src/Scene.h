@@ -51,6 +51,7 @@ private:
 	bool verTexture = false;
 	std::string tilePosDebug = "[0,0]";
 	SDL_Texture* leControle;
+	int BackgroundMusic;
 
 	//L03: TODO 3b: Declare a Player attribute
 	Player* player;

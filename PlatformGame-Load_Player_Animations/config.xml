@@ -76,6 +76,17 @@
 						</idle>
 					</animations>
 				</enemy>
+				<enemy name="fastfly" x="296" y="32" w="32" h="32" texture="Assets/Sprites/Fly/FlyFast1.png" gravity="false">
+					<animations>
+						<idle loop="true" speed="0.15">
+							<frame x="0" y="32" w="32" h="32" />
+							<frame x="32" y="32" w="32" h="32" />
+							<frame x="64" y="32" w="32" h="32" />
+							<frame x="96" y="32" w="32" h="32" />
+							<frame x="128" y="32" w="32" h="32" />
+						</idle>
+					</animations>
+				</enemy>
 			</enemies>
 		</entities>
 	</scene>

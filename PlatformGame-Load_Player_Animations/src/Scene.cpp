@@ -57,6 +57,10 @@ bool Scene::Start()
 	
 	leControle = Engine::GetInstance().textures->Load("Assets/Textures/Controls.png");
 
+	BackgroundMusic = Engine::GetInstance().audio->PlayMusic("Assets/Audio/Music/PlatformerMusic.ogg", 0);
+	int musicVolume = 40;
+	Mix_VolumeMusic(musicVolume);
+
 	return true;
 }
 
