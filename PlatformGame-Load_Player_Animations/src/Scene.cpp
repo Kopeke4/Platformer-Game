@@ -12,6 +12,7 @@
 #include "Map.h"
 #include "Item.h"
 #include "Enemy.h"
+#include "Checkpoint.h"
 
 Scene::Scene() : Module()
 {

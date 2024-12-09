@@ -43,6 +43,8 @@
 					</fall>
 				</animations>
 			</player>
+			<checkpoint x="169" y="239" w="16" h="32" texture="Assets/Sprites/checkpoint.png">
+			</checkpoint>
 			<enemies>
 				<enemy name="badguy" x="128" y="112" w="32" h="32" texture="Assets/Sprites/Mushroom/Mushroom.png" gravity="true">
 					<animations>

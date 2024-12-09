@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include <vector>
+#include "Checkpoint.h"
 
 struct SDL_Texture;
 

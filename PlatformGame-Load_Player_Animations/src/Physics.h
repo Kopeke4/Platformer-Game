@@ -29,6 +29,7 @@ enum class ColliderType {
 	PLATFORM, 
 	PINCHO,
 	ENEMY,
+	CHECKPOINT,
 	UNKNOWN
 	// ..
 };

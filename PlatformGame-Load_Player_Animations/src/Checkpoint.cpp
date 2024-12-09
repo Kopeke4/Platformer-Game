@@ -1,4 +1,4 @@
-#include "Player.h"
+#include "Checkpoint.h"
 #include "Engine.h"
 #include "Textures.h"
 #include "Audio.h"
@@ -8,27 +8,26 @@
 #include "Log.h"
 #include "Physics.h"
 #include "EntityManager.h"
-#include "Checkpoint.h"
 
-Player::Player() : Entity(EntityType::PLAYER)
+Checkpoint::Checkpoint() : Entity(EntityType::CHECKPOINT)
 {
-	name = "Player";
+	name = "Checkpoint";
 }
 
-Player::~Player() {
+Checkpoint::~Checkpoint() {
 
 }
 
-bool Player::Awake() {
+bool Checkpoint::Awake() {
 
-	//L03: TODO 2: Initialize Player parameters
+	//L03: TODO 2: Initialize Checkpoint parameters
 	position = Vector2D(0, 0);
 	return true;
 }
 
-bool Player::Start() {
+bool Checkpoint::Start() {
 
-	//L03: TODO 2: Initialize Player parameters
+	//L03: TODO 2: Initialize Checkpoint parameters
 	texture = Engine::GetInstance().textures.get()->Load(parameters.attribute("texture").as_string());
 	position.setX(parameters.attribute("x").as_int());
 	position.setY(parameters.attribute("y").as_int());
@@ -42,14 +41,14 @@ bool Player::Start() {
 	fall.LoadAnimations(parameters.child("animations").child("fall"));
 	currentAnimation = &idle;
 
-	// L08 TODO 5: Add physics to the player - initialize physics body
+	// L08 TODO 5: Add physics to the Checkpoint - initialize physics body
 	pbody = Engine::GetInstance().physics.get()->CreateCircle((int)position.getX(), (int)position.getY(), texW / 2, bodyType::DYNAMIC);
 
-	// L08 TODO 6: Assign player class (using "this") to the listener of the pbody. This makes the Physics module to call the OnCollision method
+	// L08 TODO 6: Assign Checkpoint class (using "this") to the listener of the pbody. This makes the Physics module to call the OnCollision method
 	pbody->listener = this;
 
 	// L08 TODO 7: Assign collider type
-	pbody->ctype = ColliderType::PLAYER;
+	pbody->ctype = ColliderType::CHECKPOINT;
 
 	//initialize audio effect
 	pickCoinFxId = Engine::GetInstance().audio.get()->LoadFx("Assets/Audio/Fx/retro-video-game-coin-pickup-38299.ogg");
@@ -57,9 +56,9 @@ bool Player::Start() {
 	return true;
 }
 
-bool Player::Update(float dt)
+bool Checkpoint::Update(float dt)
 {
-	// L08 TODO 5: Add physics to the player - updated player position using physics
+	// L08 TODO 5: Add physics to the Checkpoint - updated Checkpoint position using physics
 	b2Vec2 velocity = b2Vec2(0, pbody->body->GetLinearVelocity().y);
 
 	if (velocity.x == 0)
@@ -81,20 +80,20 @@ bool Player::Update(float dt)
 	// Move right
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 		velocity.x = 0.2 * dt;
-		isFlipeado = false;   
+		isFlipeado = false;
 		currentAnimation = &run;
 		if (isFlipeado == false && flipea == SDL_FLIP_HORIZONTAL)
 		{
 			flipea = SDL_FLIP_NONE;
 		}
 	}
-	
+
 	//Jump
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && isJumping == false) {
 		// Apply an initial upward force
 		pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
 		isJumping = true;
-		
+
 	}
 
 	//Jump
@@ -110,8 +109,8 @@ bool Player::Update(float dt)
 	if (velocity.y > 1) currentAnimation = &fall;
 
 
-	// If the player is jumpling, we don't want to apply gravity, we use the current velocity prduced by the jump
-	if(isJumping == true)
+	// If the Checkpoint is jumpling, we don't want to apply gravity, we use the current velocity prduced by the jump
+	if (isJumping == true)
 	{
 		velocity.y = pbody->body->GetLinearVelocity().y;
 	}
@@ -127,7 +126,7 @@ bool Player::Update(float dt)
 		}
 	}
 
-	// Apply the velocity to the player
+	// Apply the velocity to the Checkpoint
 	pbody->body->SetLinearVelocity(velocity);
 
 	b2Transform pbodyPos = pbody->body->GetTransform();
@@ -139,15 +138,15 @@ bool Player::Update(float dt)
 	return true;
 }
 
-bool Player::CleanUp()
+bool Checkpoint::CleanUp()
 {
-	LOG("Cleanup player");
+	LOG("Cleanup Checkpoint");
 	Engine::GetInstance().textures.get()->UnLoad(texture);
 	return true;
 }
 
-// L08 TODO 6: Define OnCollision function for the player. 
-void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
+// L08 TODO 6: Define OnCollision function for the Checkpoint. 
+void Checkpoint::OnCollision(PhysBody* physA, PhysBody* physB) {
 	switch (physB->ctype)
 	{
 	case ColliderType::PLATFORM:
@@ -166,7 +165,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	}
 }
 
-void Player::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
+void Checkpoint::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
 {
 	switch (physB->ctype)
 	{
@@ -179,7 +178,7 @@ void Player::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
 		break;
 	case ColliderType::PINCHO:
 		LOG("Collision PINCHO");
-		Respawn(); 
+		Respawn();
 		break;
 	case ColliderType::UNKNOWN:
 		LOG("End Collision UNKNOWN");
@@ -189,20 +188,20 @@ void Player::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
 	}
 }
 
-void Player::Respawn() {
+void Checkpoint::Respawn() {
 	position.setX(parameters.attribute("x").as_int());
 	position.setY(parameters.attribute("y").as_int());
 }
 
 
-void Player::SetPosition(Vector2D pos) {
+void Checkpoint::SetPosition(Vector2D pos) {
 	pos.setX(pos.getX() + texW / 2);
 	pos.setY(pos.getY() + texH / 2);
 	b2Vec2 bodyPos = b2Vec2(PIXEL_TO_METERS(pos.getX()), PIXEL_TO_METERS(pos.getY()));
 	pbody->body->SetTransform(bodyPos, 0);
 }
 
-Vector2D Player::GetPosition() {
+Vector2D Checkpoint::GetPosition() {
 	b2Vec2 bodyPos = pbody->body->GetTransform().p;
 	Vector2D pos = Vector2D(METERS_TO_PIXELS(bodyPos.x), METERS_TO_PIXELS(bodyPos.y));
 	return pos;

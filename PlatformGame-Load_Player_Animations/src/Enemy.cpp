@@ -8,6 +8,7 @@
 #include "Log.h"
 #include "Physics.h"
 #include "Map.h"
+#include "Checkpoint.h"
 
 Enemy::Enemy() : Entity(EntityType::ENEMY)
 {
