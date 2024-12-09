@@ -41,6 +41,7 @@ private:
 	SDL_Texture* texture;
 	const char* texturePath;
 	int texW, texH;
+	bool gravity;
 	pugi::xml_node parameters;
 	Animation* currentAnimation = nullptr;
 	Animation idle;
