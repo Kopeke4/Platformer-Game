@@ -54,4 +54,5 @@ private:
 	int maxFrameDuration = 16;
 	bool flip = false;
 	SDL_RendererFlip hflip = SDL_FLIP_NONE;
+	bool alive;
 };

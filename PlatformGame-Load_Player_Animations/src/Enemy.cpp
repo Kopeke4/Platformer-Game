@@ -34,6 +34,7 @@ bool Enemy::Start() {
 	gravity = parameters.attribute("gravity").as_bool();
 	speed = parameters.attribute("speed").as_float();
 	name = parameters.attribute("name").as_string();
+	alive = parameters.attribute("alive").as_bool();
 	//Load animations
 	idle.LoadAnimations(parameters.child("animations").child("idle"));
 	currentAnimation = &idle;
@@ -56,7 +57,8 @@ bool Enemy::Start() {
 
 bool Enemy::Update(float dt)
 {
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
+	alive = parameters.attribute("alive").as_bool();
+	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) {
 		debug = !debug;
 	}
 	ResetPath();

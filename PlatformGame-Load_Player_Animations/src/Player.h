@@ -37,7 +37,7 @@ public:
 	void Respawn();
 
 	Vector2D GetPosition();
-
+	void Attack();
 public:
 
 	//Declare player parameters

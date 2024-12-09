@@ -66,7 +66,9 @@ bool Player::Update(float dt)
 	{
 		currentAnimation = &idle;
 	}
-
+	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_K) == KEY_DOWN) {
+		Attack();
+	}
 	// Move left
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 		velocity.x = -0.2 * dt;
@@ -136,6 +138,9 @@ bool Player::Update(float dt)
 
 	Engine::GetInstance().render.get()->DrawTexture(texture, (int)position.getX(), (int)position.getY(), &currentAnimation->GetCurrentFrame(), flipea);
 	currentAnimation->Update();
+
+	
+
 	return true;
 }
 
@@ -184,14 +189,36 @@ void Player::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
 	case ColliderType::UNKNOWN:
 		LOG("End Collision UNKNOWN");
 		break;
+	case ColliderType::ENEMY:
+		Respawn();
 	default:
 		break;
 	}
 }
 
 void Player::Respawn() {
-	position.setX(parameters.attribute("x").as_int());
-	position.setY(parameters.attribute("y").as_int());
+
+	pugi::xml_document saveFile;
+
+	
+	if (!saveFile.load_file("save.xml")) {
+		std::cerr << "Error: No se pudo cargar el archivo save.xml" << std::endl;
+		return;
+	}
+
+	pugi::xml_node playerNode = saveFile.child("config")
+		.child("scene")
+		.child("entities")
+		.child("player");
+	if (!playerNode) {
+		std::cerr << "Error: No se encontró el nodo <player> en el archivo save.xml" << std::endl;
+		return;
+	}
+
+	//Vector2D playerPos = Vector2D(playerNode.attribute("x").as_int(),
+	//	playerNode.attribute("y").as_int());
+	//SetPosition(playerPos);
+
 }
 
 
@@ -206,4 +233,37 @@ Vector2D Player::GetPosition() {
 	b2Vec2 bodyPos = pbody->body->GetTransform().p;
 	Vector2D pos = Vector2D(METERS_TO_PIXELS(bodyPos.x), METERS_TO_PIXELS(bodyPos.y));
 	return pos;
+}
+
+void Player::Attack()
+{
+	//// Define the attack hitbox dimensions
+	//int attackWidth = 32;  // Width of the attack area
+	//int attackHeight = texH;  // Same height as the player sprite
+
+	//// Determine attack position based on player position and facing direction
+	//int attackX = position.getX() + (pbody->body->GetLinearVelocity().x >= 0 ? texW : -attackWidth);
+	//int attackY = position.getY();
+
+	//// Create the attack rectangle
+	//SDL_Rect attackRect = { attackX, attackY, attackWidth, attackHeight };
+
+	// //Check collision with enemies
+	//for (auto enemy : Engine::GetInstance().scene.get()->GetEnemies())
+	//{
+	//	// Get enemy's current position and hitbox size
+	//	Vector2D enemyPos = enemy->GetPosition();
+	//	SDL_Rect enemyRect = { (int)enemyPos.getX(), (int)enemyPos.getY(), 32, 32 };
+
+	//	// Detect overlap
+	//	if (SDL_HasIntersection(&attackRect, &enemyRect)) 
+	//	{
+	//		// Kill the enemy by calling DestroyEntity through the entity manager
+	//		pugi::xml_document loadFile;
+	//		pugi::xml_parse_result result = loadFile.load_file("config.xml");
+	//		pugi::xml_node sceneNode = loadFile.child("config").child("scene");
+	//		sceneNode.child("entities").child("enemies").child("enemy").child(enemy->GetName()).attribute("alive").set_value(false);
+	//	}
+	//}
+	
 }

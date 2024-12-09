@@ -39,6 +39,8 @@ public:
 
 	void LoadState();
 	void SaveState();
+
+	std::vector<Enemy*> GetEnemies() const { return enemyList; };
 public:
 	// Get tilePosDebug value
 	std::string GetTilePosDebug() {

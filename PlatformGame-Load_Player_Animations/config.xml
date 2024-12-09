@@ -45,7 +45,7 @@
 			</player>
 			<checkpoint x="169" y="239" w="16" h="32" texture="Assets/Sprites/checkpoint.png" />
 			<enemies>
-				<enemy name="badguy" x="272" y="208" w="32" h="32" texture="Assets/Sprites/Mushroom/Mushroom.png" gravity="true" speed="0.05f">
+				<enemy name="badguy" x="272" y="208" w="32" h="32" texture="Assets/Sprites/Mushroom/Mushroom.png" gravity="true" speed="0.05f" alive="true">
 					<animations>
 						<idle loop="true" speed="0.1">
 							<frame x="0" y="0" w="32" h="32" />
@@ -67,7 +67,7 @@
 						</run>
 					</animations>
 				</enemy>
-				<enemy name="badguyFAST" x="1472" y="240" w="32" h="32" texture="Assets/Sprites/Mushroom/MushroomFAST1.png" gravity="true" speed="0.075f">
+				<enemy name="badguyFAST" x="1472" y="240" w="32" h="32" texture="Assets/Sprites/Mushroom/MushroomFAST1.png" gravity="true" speed="0.075f" alive="true">
 					<animations>
 						<idle loop="true" speed="0.1">
 							<frame x="0" y="0" w="32" h="32" />
@@ -89,7 +89,7 @@
 						</run>
 					</animations>
 				</enemy>
-				<enemy name="fly" x="528" y="128" w="32" h="32" texture="Assets/Sprites/Fly/Fly.png" gravity="false" speed="0.05f">
+				<enemy name="fly" x="528" y="128" w="32" h="32" texture="Assets/Sprites/Fly/Fly.png" gravity="false" speed="0.05f" alive="true">
 					<animations>
 						<idle loop="true" speed="0.15">
 							<frame x="0" y="0" w="32" h="32" />
@@ -99,7 +99,7 @@
 						</idle>
 					</animations>
 				</enemy>
-				<enemy name="fastfly" x="1712" y="176" w="32" h="32" texture="Assets/Sprites/Fly/FlyFast1.png" gravity="false" speed="0.075f">
+				<enemy name="fastfly" x="1712" y="176" w="32" h="32" texture="Assets/Sprites/Fly/FlyFast1.png" gravity="false" speed="0.075f" alive="true">
 					<animations>
 						<idle loop="true" speed="0.15">
 							<frame x="0" y="32" w="32" h="32" />
