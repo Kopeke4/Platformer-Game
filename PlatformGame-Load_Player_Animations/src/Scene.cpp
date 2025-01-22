@@ -61,10 +61,14 @@ bool Scene::Start()
 	Engine::GetInstance().map->Load(configParameters.child("map").attribute("path").as_string(), configParameters.child("map").attribute("name").as_string());
 	
 	leControle = Engine::GetInstance().textures->Load("Assets/Textures/Controls.png");
+	title = Engine::GetInstance().textures->Load("Assets/Main.png");
 
 	BackgroundMusic = Engine::GetInstance().audio->PlayMusic("Assets/Audio/Music/PlatformerMusic.ogg", 0);
 	int musicVolume = 40;
 	Mix_VolumeMusic(musicVolume);
+
+	Engine::GetInstance().entityManager->active = false;
+	Engine::GetInstance().map->active = false;
 
 	return true;
 }
@@ -78,6 +82,28 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+	if (IntroScreen == false) {
+		Engine::GetInstance().entityManager->active = false;
+		Engine::GetInstance().map->active = false;
+		int width, height;
+		Engine::GetInstance().textures->GetSize(title, width, height);
+		int windowWidth, windowHeight;
+		Engine::GetInstance().window->GetWindowSize(windowWidth, windowHeight);
+
+		SDL_Rect dstRect = { 0, 0, width, height };
+		SDL_RenderCopy(Engine::GetInstance().render->renderer, title, nullptr, &dstRect);
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_E) == KEY_DOWN) {
+			Engine::GetInstance().entityManager->active = true;
+			Engine::GetInstance().map->active = true;
+			IntroScreen = true;
+		}
+		else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_Q) == KEY_DOWN) {
+			Engine::GetInstance().entityManager->active = true;
+			Engine::GetInstance().map->active = true;
+			IntroScreen = true;
+			LoadState();
+		}
+	}
 	Engine::GetInstance().render.get()->camera.x = 250 - player->position.getX()*2;
 
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_H) == KEY_DOWN) {

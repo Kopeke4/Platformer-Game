@@ -109,10 +109,13 @@ void EntityManager::AddEntity(Entity* entity)
 bool EntityManager::Update(float dt)
 {
 	bool ret = true;
-	for(const auto entity : entities)
+	if (active)
 	{
-		if (entity->active == false) continue;
-		ret = entity->Update(dt);
+		for (const auto entity : entities)
+		{
+			if (entity->active == false) continue;
+			ret = entity->Update(dt);
+		}
 	}
 	return ret;
 }
