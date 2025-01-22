@@ -145,6 +145,7 @@
     <None Include="vcpkg.json" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Entity.cpp" />
     <ClCompile Include="src\Audio.cpp" />
     <ClCompile Include="src\Checkpoint.cpp" />
     <ClCompile Include="src\Enemy.cpp" />
@@ -167,6 +168,7 @@
     <ClCompile Include="src\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Entity.h" />
     <ClInclude Include="src\Animation.h" />
     <ClInclude Include="src\Audio.h" />
     <ClInclude Include="src\Checkpoint.h" />
