@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Module.h"
+#include "Physics.h"
 #include <list>
 #include <vector>
 
@@ -155,6 +156,7 @@ public:
 public: 
     std::string mapFileName;
     std::string mapPath;
+    std::vector<PhysBody*> colliders;
 
 private:
     bool mapLoaded;

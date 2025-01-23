@@ -39,8 +39,11 @@ bool Scene::Awake()
 	checkpoint->SetParameters(Checkpoint1);*/
 	
 	//L08 Create a new item using the entity manager and set the position to (200, 672) to test
-	Item* item = (Item*) Engine::GetInstance().entityManager->CreateEntity(EntityType::ITEM);
-	item->position = Vector2D(200, 672);
+	for (pugi::xml_node itemNode = configParameters.child("entities").child("items").child("item"); itemNode; itemNode = itemNode.next_sibling("item"))
+	{
+		Item* item = (Item*)Engine::GetInstance().entityManager->CreateEntity(EntityType::ITEM);
+		item->SetParameters(itemNode);
+	}
 
 	// Create a enemy using the entity manager 
 	for (pugi::xml_node enemyNode = configParameters.child("entities").child("enemies").child("enemy"); enemyNode; enemyNode = enemyNode.next_sibling("enemy"))
@@ -82,6 +85,39 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_P) == KEY_DOWN) {
+		isPaused = !isPaused; // Alternar el estado de pausa
+	}
+
+	if (isPaused) {
+		return true; // Si el juego está en pausa, no actualizar la lógica del juego
+	}
+
+	if (level == 2)
+	{
+		for (auto& enemy : enemyList)
+		{
+			Engine::GetInstance().entityManager->DestroyEntity(enemy);
+		}
+		enemyList.clear();
+
+		Engine::GetInstance().map->CleanUp();
+		Engine::GetInstance().map->Load(configParameters.child("map2").attribute("path").as_string(), configParameters.child("map2").attribute("name").as_string());
+		level = 0;
+	}
+	else if (level == 1)
+	{
+		for (auto& enemy : enemyList)
+		{
+			Engine::GetInstance().entityManager->DestroyEntity(enemy);
+		}
+		enemyList.clear();
+
+		Engine::GetInstance().map->CleanUp();
+		Engine::GetInstance().map->Load(configParameters.child("map").attribute("path").as_string(), configParameters.child("map").attribute("name").as_string());
+		level = 0;
+	}
+
 	if (IntroScreen == false) {
 		Engine::GetInstance().entityManager->active = false;
 		Engine::GetInstance().map->active = false;
@@ -104,6 +140,16 @@ bool Scene::Update(float dt)
 			LoadState();
 		}
 	}
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_G) == KEY_DOWN) {
+			
+			level = 2;
+			
+		}
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F) == KEY_DOWN) {
+
+			level = 1;
+
+		}
 	Engine::GetInstance().render.get()->camera.x = 250 - player->position.getX()*2;
 
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_H) == KEY_DOWN) {

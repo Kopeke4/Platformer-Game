@@ -105,6 +105,13 @@ bool Map::CleanUp()
     }
     mapData.layers.clear();
 
+    // Limpia los objetos de colisión
+    for (PhysBody* collider : colliders) {
+        delete collider;
+		LOG("Collider deleted");
+    }
+    colliders.clear();
+
     return true;
 }
 
@@ -181,6 +188,7 @@ bool Map::Load(std::string path, std::string fileName)
             mapData.layers.push_back(mapLayer);
         }
 
+
         // L08 TODO 3: Create colliders
         float x = 0.0f;
         float y = 0.0f;
@@ -206,13 +214,14 @@ bool Map::Load(std::string path, std::string fileName)
                 if (layerName == "PINCHO") {
                     colliderType = ColliderType::PINCHO;
                 }
- 
 
                 // Crear el objeto de colisión con el tipo determinado
                 PhysBody* rect = Engine::GetInstance().physics.get()->CreateRectangle(x + width / 2, y + height / 2, width, height, STATIC);
                 rect->ctype = colliderType;
+                colliders.push_back(rect); // Añade el puntero a la lista
             }
         }
+        
         // L08 TODO 7: Assign collider type
         // Later you can create a function here to load and create the colliders from the map
         PhysBody* c1 = Engine::GetInstance().physics.get()->CreateRectangle(224 + 128, 544 + 32, 256, 64, STATIC);

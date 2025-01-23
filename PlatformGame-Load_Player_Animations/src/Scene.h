@@ -41,6 +41,7 @@ public:
 	void SaveState();
 
 	std::vector<Enemy*> GetEnemies() const { return enemyList; };
+
 public:
 	// Get tilePosDebug value
 	std::string GetTilePosDebug() {
@@ -56,10 +57,11 @@ private:
 	SDL_Texture* leControle;
 	SDL_Texture* title = nullptr;
 	int BackgroundMusic;
-
+	bool isPaused = false;
 	bool IntroScreen = false;
-
+	int level = 0;
 	//L03: TODO 3b: Declare a Player attribute
 	Player* player;
 	std::vector<Enemy*> enemyList;
+
 };

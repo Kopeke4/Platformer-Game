@@ -22,8 +22,8 @@ bool Item::Awake() {
 bool Item::Start() {
 
 	//initilize textures
-	texture = Engine::GetInstance().textures.get()->Load("Assets/Textures/goldCoin.png");
-	
+	texture = Engine::GetInstance().textures.get()->Load("C:/Users/marti/Documents/GitHub/Platformer-Game/PlatformGame-Load_Player_Animations/Assets/Sprites/coin.png");
+
 	// L08 TODO 4: Add a physics to an item - initialize the physics body
 	Engine::GetInstance().textures.get()->GetSize(texture, texW, texH);
 	pbody = Engine::GetInstance().physics.get()->CreateCircle((int)position.getX() + texH / 2, (int)position.getY() + texH / 2, texH / 2, bodyType::DYNAMIC);

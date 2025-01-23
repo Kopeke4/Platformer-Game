@@ -16,6 +16,7 @@
 	</window>
 	<scene>
 		<map path="Assets/Maps/" name="Map.tmx" />
+		<map2 path="Assets/Maps/" name="Map2.tmx" />
 		<entities>
 			<player x="169" y="239" w="32" h="32" texture="Assets/Sprites/Player/Character.png">
 				<animations>
