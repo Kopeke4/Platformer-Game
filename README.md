@@ -8,7 +8,7 @@ SPACE BAR - Jump
 
 # DEBUG MODE
 F1 - Collisions  
-F2 - Good Mode
+F2 - God Mode
 
 # ASSETS
 Character Sprite - https://jesse-m.itch.io/jungle-pack  
