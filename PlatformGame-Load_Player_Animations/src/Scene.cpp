@@ -39,11 +39,8 @@ bool Scene::Awake()
 	checkpoint->SetParameters(Checkpoint1);*/
 	
 	//L08 Create a new item using the entity manager and set the position to (200, 672) to test
-	for (pugi::xml_node itemNode = configParameters.child("entities").child("items").child("item"); itemNode; itemNode = itemNode.next_sibling("item"))
-	{
-		Item* item = (Item*)Engine::GetInstance().entityManager->CreateEntity(EntityType::ITEM);
-		item->SetParameters(itemNode);
-	}
+	Item* item = (Item*) Engine::GetInstance().entityManager->CreateEntity(EntityType::ITEM);
+	item->position = Vector2D(200, 672);
 
 	// Create a enemy using the entity manager 
 	for (pugi::xml_node enemyNode = configParameters.child("entities").child("enemies").child("enemy"); enemyNode; enemyNode = enemyNode.next_sibling("enemy"))
@@ -150,6 +147,7 @@ bool Scene::Update(float dt)
 			level = 1;
 
 		}
+
 	Engine::GetInstance().render.get()->camera.x = 250 - player->position.getX()*2;
 
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_H) == KEY_DOWN) {
